@@ -135,9 +135,9 @@ class BusSystem {
     }
   }
   listBuses() {
-    let res = '';
+    let res = "";
     for (let i = 0; i < this.buses.length; i++) {
-      res =res + this.buses[i].getDetails + "\n";
+      res = res + this.buses[i].getDetails + "\n";
     }
     return res;
   }
@@ -155,6 +155,67 @@ class BusSystem {
       : console.log("Bunday bus id yo'q");
   }
 }
-let busSystem1 = new BusSystem("Kunji", [bus1, bus2]);
-console.log(busSystem1.listBuses());
-busSystem1.addBus(bus1)
+
+class Product {
+  constructor(id, name, price, stock) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.stock = stock;
+  }
+
+  getDetails() {
+    return `Product id ${this.id}, name ${this.name}, price ${this.price}, stock ${this.stock}`;
+  }
+
+  updateStock(quantity) {
+    this.stock += quantity;
+  }
+}
+
+class OrderItem {
+  constructor(product, quantity) {
+    this.product = product;
+    this.quantity = quantity;
+  }
+
+  calculatePrice() {
+    return this.product.price * this.quantity;
+  }
+}
+
+class Order {
+  constructor(id) {
+    this.id = id;
+    this.items = [];
+  }
+
+  addItem(orderItem) {
+    this.items.push(orderItem);
+  }
+
+  calculateTotal() {
+    return this.items.reduce((sum, item) => sum + item.calculatePrice(), 0);
+  }
+}
+
+class Shop {
+  constructor() {
+    this.products = [];
+    this.orders = [];
+  }
+
+  addProduct(product) {
+    this.products.push(product);
+  }
+
+  listProducts() {
+    return this.products.map((p) => p.getDetails());
+  }
+
+  createOrder(orderId) {
+    let order = new Order(orderId);
+    this.orders.push(order);
+    return order;
+  }
+}
